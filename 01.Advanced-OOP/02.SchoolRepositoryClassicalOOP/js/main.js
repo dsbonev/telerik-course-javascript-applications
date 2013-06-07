@@ -44,12 +44,12 @@ requirejs(
     console.log('introduce a student:', studentList[0].introduce());
 
     var replacer = null,
-      identation = '  ';
+      indentation = '  ';
 
-    console.log(JSON.stringify(schoolList, replacer, identation));
+    console.log(JSON.stringify(schoolList, replacer, indentation));
     SchoolRepository.set(schoolList);
     console.log('stored and retrieved successfully: ',
-      JSON.stringify(schoolList, replacer, '  ') === JSON.stringify(SchoolRepository.get(), replacer, identation));
+      JSON.stringify(schoolList, replacer, '  ') === JSON.stringify(SchoolRepository.get(), replacer, indentation));
 
     var repositorySize = SchoolRepository.get().length;
     console.log('current repository size: ', repositorySize);
