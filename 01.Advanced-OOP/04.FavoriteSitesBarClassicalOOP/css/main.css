@@ -1,0 +1,75 @@
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 0, 71, 1);
+  text-align: center;
+  font-size: 150%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+}
+
+a {
+  display: block;
+  background-color: orange;
+  border-radius: 0.25em;
+  border: 1px solid yellow;
+  text-decoration: none;
+  color: black;
+  padding: 0.25em 0;
+}
+
+.folder_wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.folder_wrapper > a {
+  background: orange url('../img/folder.png') no-repeat bottom right;
+}
+
+.folder_wrapper.empty > a {
+  background: orange url('../img/empty.png') no-repeat bottom right;
+}
+
+a:hover, 
+.folder_wrapper:hover > a {
+  background-color: red;
+}
+
+.folder_wrapper ul {
+  position: absolute;
+  top: 100%;
+  left: 0%;
+}
+
+.folder_wrapper ul {
+  display: none;
+}
+
+.folder_wrapper:hover > ul {
+  display: block;
+}
+
+.folder_wrapper * {
+  min-width: 100%;
+}
+
+.folder_wrapper .folder_wrapper ul {
+  top: 0%;
+  left: 100%;
+}
+
