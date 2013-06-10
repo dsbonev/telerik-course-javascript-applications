@@ -20,6 +20,7 @@ define(function () {
   function createClass(constructor, parentConstructor, prototypeProperties, constructorProperties) {
     constructor.prototype = createObject(parentConstructor.prototype, prototypeProperties);
     constructor.prototype.constructor = constructor;
+    constructor.prototype._superConstructor = parentConstructor;
     mixin(constructor, constructorProperties || {});
     return constructor;
   }
