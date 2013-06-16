@@ -1,0 +1,40 @@
+
+.slider {
+  background-color: orange;
+  height: 100%;
+  width: 50%;
+  margin: auto;
+  position: relative;
+  border-radius: 1em;
+}
+
+.slider > .content {
+  padding: 1em;
+  position: relative;
+}
+
+.slider > .previous,
+.slider > .next {
+  font-size: 0;
+  position: fixed;
+  top: 50%;
+  top: calc(50% - 8px);
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+.previous {
+  background: url(js/slider_arrow_left.png) center center;
+  left: calc(25% - 32px);
+}
+
+.next {
+  background: url(js/slider_arrow_right.png) center center;
+  right: calc(25% - 32px);
+}
+
+.slider .slide {
+  display: none;
+  position: absolute;
+}
