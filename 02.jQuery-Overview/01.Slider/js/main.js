@@ -7,11 +7,12 @@ requirejs.config({
       //'http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min',
       '../../js/lib/jquery.min'
     ]
-  }
+  },
+  packages: ['component/slider']
 });
 
 requirejs(
-  ['slider', 'slide', 'jquery', 'lib/array_of'],
+  ['component/slider', 'slide', 'jquery', 'lib/array_of'],
   function (Slider, Slide, $, arrayOf) {
     'use strict';
 

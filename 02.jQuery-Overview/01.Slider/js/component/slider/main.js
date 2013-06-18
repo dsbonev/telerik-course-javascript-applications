@@ -1,7 +1,7 @@
 /* globals define */
 
-define(['jquery', 'lib/oop', 'text!slider.html', 'text!slider.css'],
-  function($, OOP, html, css) {
+define(['jquery', 'lib/oop', 'text!./main.html', 'text!./main.css', 'require'],
+  function($, OOP, html, css, require) {
   'use strict';
 
   return OOP.Class.create(
@@ -17,7 +17,7 @@ define(['jquery', 'lib/oop', 'text!slider.html', 'text!slider.css'],
 
         var el = $(html),
           contentEl = $('.content', el),
-          styleEl = $('<style>' + css + '</style>');
+          styleEl = $('<style>' + css.replace(/{{relativeUrl}}/g, require.toUrl('./')) + '</style>');
 
         el.append(styleEl);
 
