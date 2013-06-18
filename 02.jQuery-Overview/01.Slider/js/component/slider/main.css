@@ -25,12 +25,12 @@
 }
 
 .previous {
-  background: url(js/slider_arrow_left.png) center center;
+  background: url({{relativeUrl}}/slider_arrow_left.png) center center;
   left: calc(25% - 32px);
 }
 
 .next {
-  background: url(js/slider_arrow_right.png) center center;
+  background: url({{relativeUrl}}/slider_arrow_right.png) center center;
   right: calc(25% - 32px);
 }
 
