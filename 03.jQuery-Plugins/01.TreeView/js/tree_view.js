@@ -17,6 +17,10 @@
         prev().
           addClass('subtree_root');
 
+    this.on('click', 'a[href=#]', function (event) {
+      event.preventDefault();
+    });
+
     this.on('click', '.subtree_root', function () {
       $(this).next().slideToggle();
     });
