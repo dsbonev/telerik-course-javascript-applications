@@ -307,6 +307,12 @@ var snakeGame = (function() {
   });
 
   return {
+    Direction: {
+      LEFT: 0,
+      UP: 1,
+      RIGHT: 2,
+      DOWN: 3
+    },
     GameObject: GameObject,
     Food: Food,
     Obstacle: Obstacle,
