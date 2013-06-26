@@ -218,10 +218,17 @@ var snakeGame = (function() {
     },
     initGameObjects: function() {
       this.gameObjects = [];
+
       this.snake = new Snake({
         x: (this.maxX / 2) | 0,
         y: (this.maxY / 2) | 0,
       }, defaultSnakePieceSize, 0);
+
+      this.snake.addDieHandler(function(result) {
+        console.log("Result is: " + result.score);
+        clearInterval(this.snakeTimer);
+      }.bind(this));
+
       this.food = new Food({
         x: this.maxX / 2,
         y: this.maxY / 2 + 5 * defaultSnakePieceSize
@@ -250,10 +257,6 @@ var snakeGame = (function() {
           self.snake.changeDirection(direction);
         }
       });
-      this.snake.addDieHandler(function(result) {
-        console.log("Result is: " + result.score);
-        clearInterval(self.snakeTimer);
-      })
     },
     redraw: function() {
       for (var i = 0; i < this.gameObjects.length; i += 1) {
