@@ -290,6 +290,15 @@ var snakeGame = (function() {
             };
             gameObject.changePosition(position);
           }
+
+        } else {
+          for (var j = 4; j < this.snake.size; j += 1) {
+            gameObject = this.snake.pieces[j];
+
+            if (this.snake.intersects(gameObject)) {
+              this.snake.consume(gameObject);
+            }
+          }
         }
       }
     },
