@@ -55,6 +55,16 @@ describe('Snake', function () {
       snake.consume(new snakeGame.SnakePiece());
       expect(isDead).toBeTruthy();
     });
+
+    it('should increase speed when eats five Food objects', function() {
+      var speed = snake.speed;
+
+      Array.apply(null, new Array(5)).forEach(function () {
+        snake.consume(new snakeGame.Food());
+      });
+
+      expect(snake.speed).toBeGreaterThan(speed);
+    });
   });
 
   describe('changeDirection', function() {

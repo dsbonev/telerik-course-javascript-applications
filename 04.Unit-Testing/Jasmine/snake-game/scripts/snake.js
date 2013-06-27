@@ -148,6 +148,7 @@ var snakeGame = (function() {
         piece = new SnakePiece(piecePosition, defaultSnakePieceSize, speed, direction);
         this.pieces.push(piece);
       }
+      this.eatenFoodCount = 0;
     },
     move: function() {
       for (var i = this.pieces.length - 1; i > 0; i -= 1) {
@@ -175,6 +176,11 @@ var snakeGame = (function() {
     consume: function(obj) {
       if (obj instanceof Food) {
         this.grow();
+        this.eatenFoodCount += 1;
+        if (this.eatenFoodCount === 5) {
+          this.speed *= 2;
+          this.pieces.forEach(function (piece) {piece.speed = this.speed;}.bind(this));
+        }
       } else if (obj instanceof Obstacle) {
         this.die();
       } else if (obj instanceof SnakePiece) {
