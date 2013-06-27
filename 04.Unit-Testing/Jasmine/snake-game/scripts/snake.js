@@ -263,42 +263,52 @@ var snakeGame = (function() {
         this.gameObjects[i].draw(this.drawingContext);
       }
     },
+    isObjectOutOfContext: function (object) {
+      return object.position.x < 0 ||
+        object.position.x + object.size > this.maxX ||
+        object.position.y < 0 ||
+        object.position.y + object.size > this.maxY;
+    },
+    repositionOverflowingObject: function(object) {
+      object.position.x += this.maxX;
+      object.position.x %= this.maxX;
+
+      object.position.y += this.maxY;
+      object.position.y %= this.maxY;
+    },
     checkCollisions: function() {
       var i;
       for (i = 0; i < this.snake.size; i += 1) {
         var piece = this.snake.pieces[i];
-        if (piece.position.x < 0 || piece.position.x + piece.size > this.maxX || piece.position.y < 0 || piece.position.y + piece.size > this.maxY) {
-          piece.position.x += this.maxX;
-          piece.position.x %= this.maxX;
-
-          piece.position.y += this.maxY;
-          piece.position.y %= this.maxY;
+        if (this.isObjectOutOfContext(piece)) {
+          this.repositionOverflowingObject(piece);
         }
       }
 
-      for (var i = 0; i < this.gameObjects.length; i += 1) {
-        var gameObject = this.gameObjects[i];
-        if (!(gameObject instanceof Snake)) {
-          var colliding = this.snake.intersects(gameObject);
-          if (colliding) {
-            this.snake.consume(gameObject);
-          }
-          if (colliding && (gameObject instanceof Food)) {
-            var position = {
-              x: (Math.random() * this.maxX) | 0,
-              y: (Math.random() * this.maxY) | 0
-            };
-            gameObject.changePosition(position);
-          }
+      var intersectableObjects = [];
 
-        } else {
-          for (var j = 4; j < this.snake.size; j += 1) {
-            gameObject = this.snake.pieces[j];
+      for (i = 0; i < this.gameObjects.length; i += 1) {
+        if (this.gameObjects[i] instanceof Snake) continue;
 
-            if (this.snake.intersects(gameObject)) {
-              this.snake.consume(gameObject);
-            }
-          }
+        intersectableObjects.push(this.gameObjects[i]);
+      }
+
+      for (var j = 4; j < this.snake.size; j += 1) {
+        intersectableObjects.push(this.snake.pieces[i]);
+      }
+
+      for (i = 0; i < intersectableObjects.length; i += 1) {
+        var object = intersectableObjects[i];
+
+        if (!this.snake.intersects(object)) continue;
+
+        this.snake.consume(object);
+
+        if (object instanceof Food) {
+          object.changePosition({
+            x: (Math.random() * this.maxX) | 0,
+            y: (Math.random() * this.maxY) | 0
+          });
         }
       }
     },
