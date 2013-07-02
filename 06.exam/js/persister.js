@@ -6,6 +6,19 @@ var persisters = (function () {
 	var nickname = localStorage.getItem('nickname');
 	var sessionKey = localStorage.getItem('sessionKey');
 
+	var globalErrorMessageEl = $('<ol id=global_error_message>')
+		.appendTo(document.body);
+
+	$(document).ajaxStart(function() {
+    globalErrorMessageEl.empty();
+	});
+
+	$(document).ajaxError(function(event, jqXHR, ajaxSettings, thrownError) {
+    var message = jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.Message;
+    message = message || thrownError || 'unknown';
+    $('<li>').text('Error: ' + message).appendTo(globalErrorMessageEl);
+	});
+
 	function saveUserData(userData) {
 		localStorage.setItem('nickname', userData.nickname);
 		localStorage.setItem('sessionKey', userData.sessionKey);

@@ -88,3 +88,17 @@
 #error-messages {
     color: #a30124;
 }
+
+#global_error_message {
+  padding: 0;
+  margin: 0;
+  position: fixed;
+  top: 5px;
+  left: 25%;
+  width: 50%;
+  list-style-position: inside;
+  background: red;
+  color: white;
+  border-radius: 0.25em;
+  text-align: center;
+}
