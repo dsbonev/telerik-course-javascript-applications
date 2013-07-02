@@ -1,5 +1,6 @@
 
 var controllers = (function () {
+	'use strict';
 
 	var updateTimer = null;
 
