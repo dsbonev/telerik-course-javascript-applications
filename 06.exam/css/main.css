@@ -104,8 +104,31 @@
 }
 
 #game_field .cell {
-  width: 2em;
-  height: 2em;
+  width: 3em;
+  height: 3em;
   background: orange;
   border-radius: 25%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.ranger {
+  background: url('../img/ranger.png');
+}
+
+.warrior {
+  background: url('../img/warrior.png');
+}
+
+.unit {
+  background-size: 100% 100%;
+  width: 90%;
+  height: 90%;
+  margin: 5%;
+  cursor: pointer;
+}
+
+.unit.player2 {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
