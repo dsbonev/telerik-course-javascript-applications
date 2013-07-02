@@ -117,6 +117,7 @@ var models = (function () {
       elBody.find('.unit').contextMenu('context-menu', {
         'attack': {
           click: function(element) {  // element is the jquery obj clicked on when context menu launched
+            element.removeClass('defend');
             element.addClass('attack');
             setTimeout(function () {
               element.removeClass('attack');
@@ -125,6 +126,7 @@ var models = (function () {
         },
         'move': {
           click: function(element) {
+            element.removeClass('defend');
             var speed = element.data('unit').speed;
             var cell = element.parent('.cell');
 
@@ -152,7 +154,7 @@ var models = (function () {
         },
         'defend': {
           click: function(element) {
-            //element.addClass('big-font');
+            element.addClass('defend');
           }
         }
       }, { disable_native_context_menu: true, leftClick: true }

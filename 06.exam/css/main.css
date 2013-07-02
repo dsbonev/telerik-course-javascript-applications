@@ -124,6 +124,10 @@
   background: url('../img/ranger_attack.png');
 }
 
+.ranger.defend {
+  background: url('../img/ranger_defend.png');
+}
+
 .ranger.attack:after {
   content: url('../img/arrow.png');
   position: relative;
@@ -137,6 +141,11 @@
 .warrior.attack {
   background: url('../img/warrior_attack.png');
 }
+
+.warrior.defend {
+  background: url('../img/warrior_defend.png');
+}
+
 
 .unit {
   background-size: 100% 100% !important;
