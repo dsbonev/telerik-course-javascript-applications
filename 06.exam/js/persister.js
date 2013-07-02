@@ -3,8 +3,8 @@
 var persisters = (function () {
 	'use strict';
 
-	var nickname = localStorage.getItem('nickname');
-	var sessionKey = localStorage.getItem('sessionKey');
+	var nickname = 'myNickname'; //localStorage.getItem('nickname');
+	var sessionKey = 'mySessionKey'; //localStorage.getItem('sessionKey');
 
 	var globalErrorMessageEl = $('<ol id=global_error_message>')
 		.appendTo(document.body);
