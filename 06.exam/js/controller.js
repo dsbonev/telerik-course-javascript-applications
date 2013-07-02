@@ -4,7 +4,7 @@ var controllers = (function () {
 
 	var updateTimer = null;
 
-	var rootUrl = "http://dropbox.com/api/";
+	var rootUrl = 'localhost/';
 	var Controller = Class.create({
 		init: function () {
 			this.persister = persisters.get(rootUrl);
@@ -95,34 +95,20 @@ var controllers = (function () {
 				$("#game-join-inputs").remove();
 				var html =
 					'<div id="game-join-inputs">' +
-						'Number: <input type="text" id="tb-game-number"/><br/>' +
-						'Password: <input type="text" id="tb-game-pass"/><br/>' +
 						'<button id="btn-join-game">join</button>' +
 					'</div>';
 				$(this).after(html);
 			});
 			wrapper.on("click", "#btn-join-game", function () {
 				var game = {
-					number: $("#tb-game-number").val(),
 					gameId: $(this).parents("li").first().data("game-id")
 				};
-
-				var password = $("#tb-game-pass").val();
-
-				if (password) {
-					game.password = password;
-				}
 				self.persister.game.join(game);
 			});
 			wrapper.on("click", "#btn-create-game", function () {
 				var game = {
 					title: $("#tb-create-title").val(),
-					number: $("#tb-create-number").val(),
-				}
-				var password = $("#tb-create-pass").val();
-				if (password) {
-					game.password = password;
-				}
+				};
 				self.persister.game.create(game);
 			});
 
@@ -147,7 +133,7 @@ var controllers = (function () {
 					wrapper.find("#game-holder").html("started");
 				},
 				function (err) {
-					alert(JSON.stringify(err));
+					wrapper.find("#error-messages").text(err.responseJSON.Message);
 				});
 
 				return false;

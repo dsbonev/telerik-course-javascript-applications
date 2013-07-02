@@ -1,10 +1,11 @@
-﻿var ui = (function () {
+var ui = (function () {
 
 	function buildLoginForm() {
 		var html =
       '<div id="login-form-holder">' +
 				'<form>' +
 					'<a href="#" id="btn-show-login" class="button selected">Login</a>' +
+					' or ' +
 					'<a href="#" id="btn-show-register" class="button">Register</a>' +
 					'<div id="login-form">' +
 						'<label for="tb-login-username">Username: </label>' +
@@ -35,8 +36,6 @@
 		'<button id="btn-logout">Logout</button><br/>' +
 		'<div id="create-game-holder">' +
 			'Title: <input type="text" id="tb-create-title" />' +
-			'Password: <input type="text" id="tb-create-pass" />' +
-			'Number: <input type="text" id="tb-create-number" />' +
 			'<button id="btn-create-game">Create</button>' +
 		'</div>' +
 		'<div id="open-games-container">' +
@@ -115,9 +114,6 @@
 			var guess = guesses[i];
 			tableHtml +=
 				'<tr>' +
-					'<td>' +
-						guess.number +
-					'</td>' +
 					'<td>' +
 						guess.cows +
 					'</td>' +

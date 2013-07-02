@@ -1,4 +1,4 @@
-﻿/* globals Class, CryptoJS, httpRequester */
+/* globals Class, CryptoJS, httpRequester */
 
 var persisters = (function () {
 	'use strict';
@@ -25,6 +25,7 @@ var persisters = (function () {
 			this.rootUrl = rootUrl;
 			this.user = new UserPersister(this.rootUrl);
 			this.game = new GamePersister(this.rootUrl);
+			this.battle = new BattlePersister(this.rootUrl);
 			this.message = new MessagesPersister(this.rootUrl);
 		},
 		isUserLoggedIn: function () {
@@ -75,6 +76,8 @@ var persisters = (function () {
 			}, error);
 		},
 		scores: function (success, error) {
+			var url = this.rootUrl + 'scores/' + sessionKey;
+			httpRequester.getJSON(url, success, error);
 		}
 	});
 
@@ -84,28 +87,24 @@ var persisters = (function () {
 		},
 		create: function (game, success, error) {
 			var gameData = {
-				title: game.title,
-				number: game.number
+				title: game.title
 			};
-			if (game.password) {
-				gameData.password = CryptoJS.SHA1(game.password).toString();
-			}
 			var url = this.rootUrl + 'create/' + sessionKey;
 			httpRequester.postJSON(url, gameData, success, error);
 		},
 		join: function (game, success, error) {
 			var gameData = {
-				gameId: game.gameId,
-				number: game.number
+				gameId: game.gameId
 			};
-			if (game.password) {
-				gameData.password = CryptoJS.SHA1(game.password).toString();
-			}
 			var url = this.rootUrl + 'join/' + sessionKey;
 			httpRequester.postJSON(url, gameData, success, error);
 		},
 		start: function (gameId, success, error) {
 			var url = this.rootUrl + gameId + '/start/' + sessionKey;
+			httpRequester.getJSON(url, success, error);
+		},
+		field: function (gameId, success, error) {
+			var url = this.rootUrl + gameId + '/field/' + sessionKey;
 			httpRequester.getJSON(url, success, error);
 		},
 		myActive: function (success, error) {
@@ -122,12 +121,21 @@ var persisters = (function () {
 		}
 	});
 
-	var GuessPersister = Class.create({
-		init: function () {
-
+	var BattlePersister = Class.create({
+		init: function (url) {
+			this.rootUrl = url + 'battle/';
 		},
-		make: function () {
-
+		move: function (gameId, unitData, success, error) {
+			var url = this.rootUrl + gameId + '/move/' + sessionKey;
+			httpRequester.postJSON(url, unitData, success, error);
+		},
+		attack: function (gameId, unitData, success, error) {
+			var url = this.rootUrl + gameId + '/attack/' + sessionKey;
+			httpRequester.postJSON(url, unitData, success, error);
+		},
+		defend: function (gameId, unitId, success, error) {
+			var url = this.rootUrl + gameId + '/defend/' + sessionKey;
+			httpRequester.postJSON(url, unitId, success, error);
 		}
 	});
 
@@ -135,12 +143,12 @@ var persisters = (function () {
 		init: function (url) {
 			this.rootUrl = url + 'messages/';
 		},
-		unread: function (success, error) {
-			var url = this.rootUrl + 'unread/' + sessionKey;
-			httpRequester.getJSON(url, success, error);
-		},
 		all: function (success, error) {
 			var url = this.rootUrl + 'all/' + sessionKey;
+			httpRequester.getJSON(url, success, error);
+		},
+		unread: function (success, error) {
+			var url = this.rootUrl + 'unread/' + sessionKey;
 			httpRequester.getJSON(url, success, error);
 		}
 	});
