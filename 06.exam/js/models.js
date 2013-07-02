@@ -9,7 +9,7 @@ var models = (function () {
     this.armor = armor;
     this.hitPoints = hitPoints;
     this.range = range;
-    this.position = position;
+    this.speed = speed;
   }
 
   function Ranger(position) {
@@ -51,8 +51,6 @@ var models = (function () {
     toDOM: function () {
       var el = $('<table id=game_field>');
 
-
-
       for (var i = 0; i < this.verticalCellCount; i += 1) {
         var rowEl = $('<tr>');
 
@@ -81,7 +79,7 @@ var models = (function () {
       });
 
       //player2
-      var rangerRowPositions = [1, 3, 5, 7];
+      rangerRowPositions = [1, 3, 5, 7];
       rangerRowPositions.forEach(function (rowPos) {
         el.find('tr:nth-of-type(' + (rowPos + 1) + ')')
           .children()
@@ -89,7 +87,7 @@ var models = (function () {
             .append(new Ranger({x: 8, y: rowPos}).toDOM().addClass('player2'));
       });
 
-      var warriorRowPositions = [0, 2, 4, 6, 8];
+      warriorRowPositions = [0, 2, 4, 6, 8];
       warriorRowPositions.forEach(function (rowPos) {
         el.find('tr:nth-of-type(' + (rowPos + 1) + ')')
           .children()
@@ -101,6 +99,28 @@ var models = (function () {
       playerNamesEl.append($('<th colspan=4>').text(this.player1));
       playerNamesEl.append($('<th colspan=4>').text(this.player2));
       playerNamesEl.prependTo(el);
+
+      el.find('.unit').contextMenu('context-menu', {
+        'attack': {
+          click: function(element) {  // element is the jquery obj clicked on when context menu launched
+            element.addClass('attack');
+            setTimeout(function () {
+              element.removeClass('attack');
+            }, 1000);
+          }
+        },
+        'move': {
+          click: function(element) {
+            //element.addClass('big-font');
+          }
+        },
+        'defend': {
+          click: function(element) {
+            //element.addClass('big-font');
+          }
+        }
+      }, { disable_native_context_menu: true, leftClick: true }
+      );
 
       return el;
     }
