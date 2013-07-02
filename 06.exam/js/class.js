@@ -63,4 +63,20 @@ var Class = (function() {
   };
 }());
 
+function mixin(targetObject /* sourceObject1, sourceObject2, ... */) {
+  'use strict';
+
+  for (var i = 1, length = arguments.length; i < length; i += 1) {
+    var sourceObject = arguments[i];
+
+    for (var property in sourceObject) {
+      if (sourceObject.hasOwnProperty(property)) {
+        targetObject[property] = sourceObject[property];
+      }
+    }
+  }
+
+  return targetObject;
+}
+
 // module.exports = Class;

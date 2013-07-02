@@ -102,3 +102,10 @@
   border-radius: 0.25em;
   text-align: center;
 }
+
+#game_field .cell {
+  width: 2em;
+  height: 2em;
+  background: orange;
+  border-radius: 25%;
+}

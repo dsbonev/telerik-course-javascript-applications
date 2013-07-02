@@ -33,12 +33,17 @@ var controllers = (function () {
 			updateTimer = setInterval(function () {
 				self.updateUI(selector);
 			}, 15000);
+
+			this.loadFieldDemoUI(selector);
 		},
 		loadGame: function (selector, gameId) {
 			this.persister.game.state(gameId, function (gameState) {
 				var gameHtml = ui.gameState(gameState);
 				$(selector + " #game-holder").html(gameHtml)
 			});
+		},
+		loadFieldDemoUI: function (selector) {
+			$(selector).append(new models.Field(this.persister.nickname(), 'otherPlayer').toDOM());
 		},
 		attachUIEventHandlers: function (selector) {
 			var wrapper = $(selector);
