@@ -12,13 +12,23 @@ var models = (function () {
     this.speed = speed;
   }
 
+  mixin(Unit.prototype, {
+    toDOM: function () {
+      var el = $('<div class=unit>');
+
+      el.data('unit', this);
+
+      return el;
+    }
+  });
+
   function Ranger(position) {
     Unit.apply(this, [position, 8, 3, 15, 1, 2]);
   }
 
   mixin(Ranger.prototype, {
     toDOM: function () {
-      var el = $('<div class="unit ranger">');
+      var el = Unit.prototype.toDOM.apply(this).addClass('ranger');
 
       return el;
     }
@@ -30,7 +40,7 @@ var models = (function () {
 
   mixin(Warrior.prototype, {
     toDOM: function () {
-      var el = $('<div class="unit warrior">');
+      var el = Unit.prototype.toDOM.apply(this).addClass('warrior');
 
       return el;
     }
@@ -49,7 +59,8 @@ var models = (function () {
 
   mixin(Field.prototype, {
     toDOM: function () {
-      var el = $('<table id=game_field>');
+      var el = $('<table id=game_field>'),
+       elBody = $('<tbody>').appendTo(el);
 
       for (var i = 0; i < this.verticalCellCount; i += 1) {
         var rowEl = $('<tr>');
@@ -58,13 +69,13 @@ var models = (function () {
           $('<td class=cell>').appendTo(rowEl);
         }
 
-        rowEl.appendTo(el);
+        rowEl.appendTo(elBody);
       }
 
       //player1
       var rangerRowPositions = [1, 3, 5, 7];
       rangerRowPositions.forEach(function (rowPos) {
-        el.find('tr:nth-of-type(' + (rowPos + 1) + ')')
+        elBody.find('tr:nth-of-type(' + (rowPos + 1) + ')')
           .children()
           .first()
             .append(new Ranger({x: 0, y: rowPos}).toDOM().addClass('player1'));
@@ -72,7 +83,7 @@ var models = (function () {
 
       var warriorRowPositions = [0, 2, 4, 6, 8];
       warriorRowPositions.forEach(function (rowPos) {
-        el.find('tr:nth-of-type(' + (rowPos + 1) + ')')
+        elBody.find('tr:nth-of-type(' + (rowPos + 1) + ')')
           .children()
           .eq(1)
             .append(new Warrior({x: 1, y: rowPos}).toDOM().addClass('player1'));
@@ -81,7 +92,7 @@ var models = (function () {
       //player2
       rangerRowPositions = [1, 3, 5, 7];
       rangerRowPositions.forEach(function (rowPos) {
-        el.find('tr:nth-of-type(' + (rowPos + 1) + ')')
+        elBody.find('tr:nth-of-type(' + (rowPos + 1) + ')')
           .children()
           .last()
             .append(new Ranger({x: 8, y: rowPos}).toDOM().addClass('player2'));
@@ -89,18 +100,21 @@ var models = (function () {
 
       warriorRowPositions = [0, 2, 4, 6, 8];
       warriorRowPositions.forEach(function (rowPos) {
-        el.find('tr:nth-of-type(' + (rowPos + 1) + ')')
+        elBody.find('tr:nth-of-type(' + (rowPos + 1) + ')')
           .children()
           .eq(-2)
             .append(new Warrior({x: 7, y: rowPos}).toDOM().addClass('player2'));
       });
 
+      var elHead = $('<thead>').prependTo(el);
       var playerNamesEl = $('<tr>');
       playerNamesEl.append($('<th colspan=4>').text(this.player1));
       playerNamesEl.append($('<th colspan=4>').text(this.player2));
-      playerNamesEl.prependTo(el);
+      playerNamesEl.prependTo(elHead);
 
-      el.find('.unit').contextMenu('context-menu', {
+      var self = this;
+
+      elBody.find('.unit').contextMenu('context-menu', {
         'attack': {
           click: function(element) {  // element is the jquery obj clicked on when context menu launched
             element.addClass('attack');
@@ -111,7 +125,29 @@ var models = (function () {
         },
         'move': {
           click: function(element) {
-            //element.addClass('big-font');
+            var speed = element.data('unit').speed;
+            var cell = element.parent('.cell');
+
+            self.unitToMove = element;
+
+            var markedCellCount = 0,
+              cellToMark = cell.next();
+
+            while(cellToMark && markedCellCount < speed) {
+              cellToMark.addClass('move_to');
+              markedCellCount += 1;
+              cellToMark = cellToMark.next();
+            }
+
+            markedCellCount = 0,
+              cellToMark = cell.prev();
+
+            while(cellToMark && markedCellCount < speed) {
+              cellToMark.addClass('move_to');
+              markedCellCount += 1;
+              cellToMark = cellToMark.prev();
+            }
+
           }
         },
         'defend': {
@@ -121,6 +157,11 @@ var models = (function () {
         }
       }, { disable_native_context_menu: true, leftClick: true }
       );
+
+      el.on('click', '.move_to', function () {
+        $(this).append(self.unitToMove);
+        el.find('.move_to').removeClass('move_to');
+      });
 
       return el;
     }
