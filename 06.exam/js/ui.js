@@ -2,8 +2,10 @@
 
 	function buildLoginForm() {
 		var html =
-            '<div id="login-form-holder">' +
+      '<div id="login-form-holder">' +
 				'<form>' +
+					'<a href="#" id="btn-show-login" class="button selected">Login</a>' +
+					'<a href="#" id="btn-show-register" class="button">Register</a>' +
 					'<div id="login-form">' +
 						'<label for="tb-login-username">Username: </label>' +
 						'<input type="text" id="tb-login-username"><br />' +
@@ -20,11 +22,9 @@
 						'<input type="text" id="tb-register-password"><br />' +
 						'<button id="btn-register" class="button">Register</button>' +
 					'</div>' +
-					'<a href="#" id="btn-show-login" class="button selected">Login</a>' +
-					'<a href="#" id="btn-show-register" class="button">Register</a>' +
 				'</form>' +
 				'<div id="error-messages"></div>' +
-            '</div>';
+      '</div>';
 		return html;
 	}
 
@@ -149,7 +149,7 @@
 		'</div>';
 		return html;
 	}
-	
+
 	function buildMessagesList(messages) {
 		var list = '<ul class="messages-list">';
 		var msg;

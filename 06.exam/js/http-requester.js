@@ -1,4 +1,4 @@
-﻿/// <reference path="jquery-2.0.2.js" />
+﻿
 var httpRequester = (function () {
 	function getJSON(url, success, error) {
 		$.ajax({
@@ -10,6 +10,7 @@ var httpRequester = (function () {
 			error: error
 		});
 	}
+
 	function postJSON(url, data, success, error) {
 		$.ajax({
 			url: url,
@@ -21,6 +22,7 @@ var httpRequester = (function () {
 			error: error
 		});
 	}
+
 	return {
 		getJSON: getJSON,
 		postJSON: postJSON

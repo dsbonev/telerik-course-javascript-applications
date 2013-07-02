@@ -1,15 +1,15 @@
-﻿/// <reference path="http-requester.js" />
-/// <reference path="class.js" />
-/// <reference path="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js" />
+﻿
 var persisters = (function () {
 	var nickname = localStorage.getItem("nickname");
 	var sessionKey = localStorage.getItem("sessionKey");
+
 	function saveUserData(userData) {
 		localStorage.setItem("nickname", userData.nickname);
 		localStorage.setItem("sessionKey", userData.sessionKey);
 		nickname = userData.nickname;
 		sessionKey = userData.sessionKey;
 	}
+
 	function clearUserData() {
 		localStorage.removeItem("nickname");
 		localStorage.removeItem("sessionKey");
@@ -32,6 +32,7 @@ var persisters = (function () {
 			return nickname;
 		}
 	});
+
 	var UserPersister = Class.create({
 		init: function (rootUrl) {
 			//...api/user/
@@ -73,6 +74,7 @@ var persisters = (function () {
 		scores: function (success, error) {
 		}
 	});
+
 	var GamePersister = Class.create({
 		init: function (url) {
 			this.rootUrl = url + "game/";
@@ -116,6 +118,7 @@ var persisters = (function () {
 			httpRequester.getJSON(url, success, error);
 		}
 	});
+
 	var GuessPersister = Class.create({
 		init: function () {
 
@@ -124,6 +127,7 @@ var persisters = (function () {
 
 		}
 	});
+
 	var MessagesPersister = Class.create({
 		init: function (url) {
 			this.rootUrl = url + "messages/";
@@ -137,6 +141,7 @@ var persisters = (function () {
 			httpRequester.getJSON(url, success, error);
 		}
 	});
+
 	return {
 		get: function (url) {
 			return new MainPersister(url);

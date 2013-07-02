@@ -1,13 +1,9 @@
-﻿/// <reference path="class.js" />
-/// <reference path="persister.js" />
-/// <reference path="jquery-2.0.2.js" />
-/// <reference path="ui.js" />
 
 var controllers = (function () {
 
 	var updateTimer = null;
 
-	var rootUrl = "http://localhost:40643/api/";
+	var rootUrl = "http://dropbox.com/api/";
 	var Controller = Class.create({
 		init: function () {
 			this.persister = persisters.get(rootUrl);
@@ -155,7 +151,7 @@ var controllers = (function () {
 
 				return false;
 			});
-			
+
 			wrapper.on("click", ".active-games .in-progress", function () {
 				self.loadGame(selector, $(this).parent().data("game-id"));
 			});
@@ -183,8 +179,3 @@ var controllers = (function () {
 		}
 	}
 }());
-
-$(function () {
-	var controller = controllers.get();
-	controller.loadUI("#content");
-});
